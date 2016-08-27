@@ -1,5 +1,8 @@
 #include "gamewidget.h"
 
+#include "input.h"
+
+#include <QDebug>
 
 GameWidget::GameWidget(QWidget *parent)
     : QOpenGLWidget(parent)
@@ -18,6 +21,9 @@ void GameWidget::initializeGL()
     initializeOpenGLFunctions();
 
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GameWidget::cleanup);
+
+    Input::create();
+    installEventFilter(Input::instance());
 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
